@@ -724,6 +724,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    reviews: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::review.review'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -788,37 +793,86 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
-export interface ApiArticleArticle extends Schema.CollectionType {
-  collectionName: 'articles';
+export interface ApiAiToolAiTool extends Schema.CollectionType {
+  collectionName: 'ai_tools';
   info: {
-    singularName: 'article';
-    pluralName: 'articles';
-    displayName: 'Article';
+    singularName: 'ai-tool';
+    pluralName: 'ai-tools';
+    displayName: 'Ai-Tool';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     Title: Attribute.String & Attribute.Required;
-    slug: Attribute.UID<'api::article.article', 'Title'> & Attribute.Required;
-    Big_description: Attribute.Blocks & Attribute.Required;
-    small_description: Attribute.Text;
-    Logo: Attribute.Media & Attribute.Required;
+    Description: Attribute.Blocks & Attribute.Required;
+    Features: Attribute.Blocks;
+    Benefits: Attribute.Blocks;
+    Limitations: Attribute.Blocks;
+    categories: Attribute.Relation<
+      'api::ai-tool.ai-tool',
+      'oneToMany',
+      'api::category.category'
+    >;
     images: Attribute.Media;
+    videos: Attribute.Media;
+    OfficialWebsite: Attribute.String & Attribute.Required;
+    DocumentationLink: Attribute.String;
+    Rating: Attribute.Decimal & Attribute.Required;
+    reviews: Attribute.Relation<
+      'api::ai-tool.ai-tool',
+      'oneToMany',
+      'api::review.review'
+    >;
+    slug: Attribute.UID<'api::ai-tool.ai-tool', 'Title'>;
+    logo: Attribute.Media;
+    smalldescription: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::article.article',
+      'api::ai-tool.ai-tool',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::article.article',
+      'api::ai-tool.ai-tool',
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBlogBlog extends Schema.CollectionType {
+  collectionName: 'blogs';
+  info: {
+    singularName: 'blog';
+    pluralName: 'blogs';
+    displayName: 'Blog';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String & Attribute.Required;
+    Content: Attribute.Blocks;
+    users_permissions_user: Attribute.Relation<
+      'api::blog.blog',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    date: Attribute.Date;
+    slug: Attribute.UID<'api::blog.blog', 'Title'>;
+    FeaturedImage: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::blog.blog', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -829,6 +883,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     singularName: 'category';
     pluralName: 'categories';
     displayName: 'Category';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -836,6 +891,12 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   attributes: {
     Title: Attribute.String & Attribute.Required;
     slug: Attribute.UID<'api::category.category', 'Title'> & Attribute.Required;
+    ai_tool: Attribute.Relation<
+      'api::category.category',
+      'manyToOne',
+      'api::ai-tool.ai-tool'
+    >;
+    image: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -847,6 +908,78 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNewsletterNewsletter extends Schema.CollectionType {
+  collectionName: 'newsletters';
+  info: {
+    singularName: 'newsletter';
+    pluralName: 'newsletters';
+    displayName: 'Newsletter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Subject: Attribute.String;
+    Content: Attribute.Blocks;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::newsletter.newsletter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::newsletter.newsletter',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'Review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Content: Attribute.Text;
+    Rating: Attribute.Decimal;
+    users_permissions_user: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    ai_tool: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::ai-tool.ai-tool'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::review.review',
       'oneToOne',
       'admin::user'
     > &
@@ -872,8 +1005,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
-      'api::article.article': ApiArticleArticle;
+      'api::ai-tool.ai-tool': ApiAiToolAiTool;
+      'api::blog.blog': ApiBlogBlog;
       'api::category.category': ApiCategoryCategory;
+      'api::newsletter.newsletter': ApiNewsletterNewsletter;
+      'api::review.review': ApiReviewReview;
     }
   }
 }

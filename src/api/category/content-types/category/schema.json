@@ -4,7 +4,8 @@
   "info": {
     "singularName": "category",
     "pluralName": "categories",
-    "displayName": "Category"
+    "displayName": "Category",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,22 @@
       "type": "uid",
       "targetField": "Title",
       "required": true
+    },
+    "ai_tool": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ai-tool.ai-tool",
+      "inversedBy": "categories"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

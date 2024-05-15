@@ -1,0 +1,96 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ai_tools",
+  "info": {
+    "singularName": "ai-tool",
+    "pluralName": "ai-tools",
+    "displayName": "Ai-Tool",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "blocks",
+      "required": true
+    },
+    "Features": {
+      "type": "blocks"
+    },
+    "Benefits": {
+      "type": "blocks"
+    },
+    "Limitations": {
+      "type": "blocks"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category.category",
+      "mappedBy": "ai_tool"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "videos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "OfficialWebsite": {
+      "type": "string",
+      "required": true
+    },
+    "DocumentationLink": {
+      "type": "string"
+    },
+    "Rating": {
+      "type": "decimal",
+      "required": true
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "ai_tool"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "Title"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "smalldescription": {
+      "type": "text"
+    }
+  }
+}
