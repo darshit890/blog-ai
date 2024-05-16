@@ -16,19 +16,6 @@
       "type": "string",
       "required": true
     },
-    "Description": {
-      "type": "blocks",
-      "required": true
-    },
-    "Features": {
-      "type": "blocks"
-    },
-    "Benefits": {
-      "type": "blocks"
-    },
-    "Limitations": {
-      "type": "blocks"
-    },
     "categories": {
       "type": "relation",
       "relation": "oneToMany",
@@ -90,6 +77,18 @@
       ]
     },
     "smalldescription": {
+      "type": "text"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Features": {
+      "type": "text"
+    },
+    "Benefits": {
+      "type": "text"
+    },
+    "Limitations": {
       "type": "text"
     }
   }

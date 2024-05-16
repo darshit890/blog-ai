@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blog",
     "pluralName": "blogs",
-    "displayName": "Blog"
+    "displayName": "Blog",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,9 +15,6 @@
     "Title": {
       "type": "string",
       "required": true
-    },
-    "Content": {
-      "type": "blocks"
     },
     "users_permissions_user": {
       "type": "relation",
@@ -31,14 +29,18 @@
       "targetField": "Title"
     },
     "FeaturedImage": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "Content": {
+      "type": "text"
     }
   }
 }

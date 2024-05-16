@@ -806,10 +806,6 @@ export interface ApiAiToolAiTool extends Schema.CollectionType {
   };
   attributes: {
     Title: Attribute.String & Attribute.Required;
-    Description: Attribute.Blocks & Attribute.Required;
-    Features: Attribute.Blocks;
-    Benefits: Attribute.Blocks;
-    Limitations: Attribute.Blocks;
     categories: Attribute.Relation<
       'api::ai-tool.ai-tool',
       'oneToMany',
@@ -828,6 +824,10 @@ export interface ApiAiToolAiTool extends Schema.CollectionType {
     slug: Attribute.UID<'api::ai-tool.ai-tool', 'Title'>;
     logo: Attribute.Media;
     smalldescription: Attribute.Text;
+    Description: Attribute.Text;
+    Features: Attribute.Text;
+    Benefits: Attribute.Text;
+    Limitations: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -852,13 +852,13 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     singularName: 'blog';
     pluralName: 'blogs';
     displayName: 'Blog';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     Title: Attribute.String & Attribute.Required;
-    Content: Attribute.Blocks;
     users_permissions_user: Attribute.Relation<
       'api::blog.blog',
       'oneToOne',
@@ -867,6 +867,7 @@ export interface ApiBlogBlog extends Schema.CollectionType {
     date: Attribute.Date;
     slug: Attribute.UID<'api::blog.blog', 'Title'>;
     FeaturedImage: Attribute.Media;
+    Content: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
