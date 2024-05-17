@@ -20,7 +20,7 @@ module.exports = [
       },
     },
   },
-  'strapi::security',
+  'strapi::errors',
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
