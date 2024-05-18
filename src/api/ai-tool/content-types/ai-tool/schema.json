@@ -90,6 +90,12 @@
     },
     "Limitations": {
       "type": "text"
+    },
+    "Seo": {
+      "displayName": "Seo",
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }
